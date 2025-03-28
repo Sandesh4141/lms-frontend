@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Trash, Pencil } from "lucide-react";
 
+import { useNavigate } from "react-router-dom";
+
 interface Student {
   id: number;
   name: string;
@@ -12,6 +14,7 @@ interface Student {
 }
 
 function Students() {
+  const navigate = useNavigate();
   const [students, setStudents] = useState<Student[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -67,7 +70,7 @@ function Students() {
     <div className="space-y-4">
       <div className="flex justify-between items-center">
         <h2 className="text-xl font-semibold">Students</h2>
-        <Button onClick={() => alert("Open Add Student Modal")}>
+        <Button onClick={() => navigate("/admin/student/add-student")}>
           Add Student
         </Button>
       </div>

@@ -12,6 +12,7 @@ import Courses from "@/pages/admin/Courses";
 import Announcements from "@/pages/admin/Announcements";
 import Reports from "@/pages/admin/Reports";
 import Settings from "@/pages/admin/Setting";
+import AddStudentPage from "./pages/admin/AddStudent";
 
 export default function App() {
   return (
@@ -26,6 +27,10 @@ export default function App() {
           <Route
             path="/admin"
             element={<Navigate to="/admin/dashboard" replace />}
+          />
+          <Route
+            path="/admin/student/add-student"
+            element={<AddStudentPage />}
           />
           <Route path="/admin/dashboard" element={<AdminDashboard />} />
           <Route path="/admin/students" element={<Students />} />
