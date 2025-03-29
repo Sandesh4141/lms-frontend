@@ -1,60 +1,47 @@
-import React from "react";
 import { LucideIcon } from "lucide-react";
 
-type StatsCardProps = {
+interface StatsCardProps {
   title: string;
   value: string | number;
-  icon?: LucideIcon;
-  trend?: number; 
+  icon: LucideIcon;
+  trend?: number; // optional: percentage up/down
   description?: string;
-  className?: string;
-};
+}
 
-const StatsCard: React.FC<StatsCardProps> = ({
+export default function StatsCard({
   title,
   value,
   icon: Icon,
   trend,
   description,
-  className = "",
-}) => {
-  const trendColor =
-    (trend ?? 0) > 0
-      ? "text-green-500"
-      : (trend ?? 0) < 0
-      ? "text-red-500"
-      : "text-muted-foreground";
-  const trendIcon = (trend ?? 0) > 0 ? "↑" : (trend ?? 0) < 0 ? "↓" : "";
-
+}: StatsCardProps) {
   return (
-    <div
-      className={`glass-card rounded-xl p-6 hover-lift card-transition ${className}`}
-    >
-      <div className="flex justify-between items-start">
+    <div className="rounded-xl border bg-card p-6 shadow-sm hover:shadow-md transition-all duration-300">
+      <div className="flex items-center justify-between">
+        <h4 className="text-sm font-medium text-muted-foreground">{title}</h4>
+        <div className="rounded-full bg-muted p-2">
+          <Icon className="h-5 w-5 text-primary" />
+        </div>
+      </div>
+
+      <div className="mt-4 flex items-end justify-between">
         <div>
-          <h3 className="text-sm font-medium text-muted-foreground mb-1">
-            {title}
-          </h3>
-          <div className="flex items-baseline gap-2">
-            <p className="text-2xl font-semibold">{value}</p>
-            {trend !== undefined && (
-              <span className={`text-sm ${trendColor} flex items-center`}>
-                {trendIcon} {Math.abs(trend)}%
-              </span>
-            )}
-          </div>
+          <div className="text-2xl font-bold">{value}</div>
           {description && (
-            <p className="text-xs text-muted-foreground mt-1">{description}</p>
+            <div className="text-xs text-muted-foreground">{description}</div>
           )}
         </div>
-        {Icon && (
-          <div className="rounded-full bg-primary/10 p-2">
-            <Icon className="h-5 w-5 text-primary" />
+
+        {typeof trend === "number" && (
+          <div
+            className={`text-sm font-medium ${
+              trend > 0 ? "text-green-600" : "text-red-600"
+            }`}
+          >
+            {trend > 0 ? "↑" : "↓"} {Math.abs(trend)}%
           </div>
         )}
       </div>
     </div>
   );
-};
-
-export default StatsCard;
+}
