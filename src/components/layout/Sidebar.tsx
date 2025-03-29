@@ -78,7 +78,7 @@ export default function Sidebar() {
       </button>
 
       {/* App title */}
-      <div className="p-4 border-b border-border text-center font-bold text-lg">
+      <div className="pt-4 border-border text-center font-bold text-lg">
         {collapsed ? "LMS" : "Moodle LMS"}
       </div>
 

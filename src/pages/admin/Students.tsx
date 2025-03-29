@@ -106,11 +106,12 @@ function Students() {
                     size="sm"
                     variant="outline"
                     onClick={() =>
-                      alert("Edit form for student: " + student.name)
+                      navigate(`/admin/student/edit/${student.id}`)
                     }
                   >
                     <Pencil size={14} />
                   </Button>
+
                   <Button
                     size="sm"
                     variant="destructive"
