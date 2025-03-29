@@ -65,9 +65,11 @@ function AddStudentPage() {
         }
       );
       setCourses(res.data);
+      return res.data;
     } catch (err) {
       console.error("Failed to load courses", err);
       setCourses([]);
+      return [];
     }
   };
 
@@ -96,7 +98,6 @@ function AddStudentPage() {
     const username = generateUsername(form.name);
     const password = generatePassword();
 
-    // Phone number validation
     if (!/^\d{10}$/.test(form.phone)) {
       alert("Phone number must be exactly 10 digits.");
       return;
@@ -107,6 +108,7 @@ function AddStudentPage() {
         "http://localhost:5000/admin/students",
         {
           ...form,
+          course_id: form.course, //  send course_id explicitly
           username,
           password,
         },
@@ -121,6 +123,42 @@ function AddStudentPage() {
     } catch (err) {
       console.error("Error adding student:", err);
       alert("Failed to add student.");
+    }
+  };
+
+  //  FIXED: Fill demo data correctly by reading direct course list
+  const fillDemoData = async () => {
+    const demoName = "John Doe";
+    const demoDepartment = departments[0];
+
+    if (!demoDepartment) return;
+
+    try {
+      const res = await axios.get(
+        `http://localhost:5000/admin/departments/${demoDepartment.id}/courses`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+
+      const fetchedCourses = res.data || [];
+
+      setCourses(fetchedCourses);
+
+      setForm({
+        name: demoName,
+        email: "johndoe@example.com",
+        phone: "9876543210",
+        dob: "2001-05-15",
+        gender: "Male",
+        address: "123 Demo Street, Pune",
+        department: String(demoDepartment.id),
+        course: fetchedCourses[0]?.id ? String(fetchedCourses[0].id) : "",
+        enrollment_year: "2023",
+        year_of_study: "2",
+      });
+    } catch (err) {
+      console.error("Failed to fetch courses for demo department", err);
     }
   };
 
@@ -163,7 +201,6 @@ function AddStudentPage() {
               onChange={handleChange}
             />
 
-            {/* 🔄 Gender Select */}
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-600 dark:text-gray-300">
                 Gender
@@ -215,20 +252,19 @@ function AddStudentPage() {
               onChange={handleChange}
             />
 
-            {/* 🔄 Department Select */}
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-600 dark:text-gray-300">
                 Department
               </label>
               <Select
                 value={form.department}
-                onValueChange={(value) => {
+                onValueChange={async (value) => {
                   setForm((prev) => ({
                     ...prev,
                     department: value,
                     course: "",
                   }));
-                  fetchCourses(parseInt(value));
+                  await fetchCourses(parseInt(value));
                 }}
               >
                 <SelectTrigger className="w-full">
@@ -244,7 +280,6 @@ function AddStudentPage() {
               </Select>
             </div>
 
-            {/* 🔄 Course Select */}
             <div>
               <label className="block text-sm font-medium mb-1 text-gray-600 dark:text-gray-300">
                 Course
@@ -273,6 +308,9 @@ function AddStudentPage() {
 
         {/* === Actions === */}
         <div className="flex justify-end space-x-3 pt-4">
+          <Button variant="ghost" onClick={fillDemoData}>
+            Fill Demo Data
+          </Button>
           <Button variant="outline" onClick={() => navigate("/admin/students")}>
             Cancel
           </Button>
