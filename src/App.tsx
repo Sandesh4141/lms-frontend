@@ -1,4 +1,6 @@
-import { Routes, Route, Navigate, replace } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
+import { Toaster } from "@/components/ui/sonner"; // Sonner toast system
+
 import Landing from "@/pages/Landing";
 import Login from "@/pages/Login";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
@@ -14,51 +16,57 @@ import Reports from "@/pages/admin/Reports";
 import Settings from "@/pages/admin/Setting";
 import AddStudentPage from "@/pages/admin/AddStudent";
 import EditStudentPage from "@/pages/admin/EditStudentPage";
+
 export default function App() {
   return (
-    <Routes>
-      {/* Public Routes */}
-      <Route path="/" element={<Landing />} />
-      <Route path="/login" element={<Login />} />
+    <>
+      {/*  This can be placed anywhere outside of <Routes /> */}
+      <Toaster richColors position="top-right" />
 
-      {/* Admin Protected Routes */}
-      <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
-        <Route element={<DashboardLayout />}>
-          <Route
-            path="/admin"
-            element={<Navigate to="/admin/dashboard" replace />}
-          />
-          <Route
-            path="/admin/student/add-student"
-            element={<AddStudentPage />}
-          />
-          <Route path="/admin/student/edit/:id" element={<EditStudentPage />} />
+      {/* Routes go inside a fragment */}
+      <Routes>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
 
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/students" element={<Students />} />
-          <Route path="/admin/teachers" element={<Teachers />} />
-          <Route path="/admin/courses" element={<Courses />} />
-          <Route path="/admin/announcements" element={<Announcements />} />
-          <Route path="/admin/reports" element={<Reports />} />
-          <Route path="/admin/settings" element={<Settings />} />
+        {/* Admin */}
+        <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+          <Route element={<DashboardLayout />}>
+            <Route
+              path="/admin"
+              element={<Navigate to="/admin/dashboard" replace />}
+            />
+            <Route
+              path="/admin/student/add-student"
+              element={<AddStudentPage />}
+            />
+            <Route
+              path="/admin/student/edit/:id"
+              element={<EditStudentPage />}
+            />
+            <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route path="/admin/students" element={<Students />} />
+            <Route path="/admin/teachers" element={<Teachers />} />
+            <Route path="/admin/courses" element={<Courses />} />
+            <Route path="/admin/announcements" element={<Announcements />} />
+            <Route path="/admin/reports" element={<Reports />} />
+            <Route path="/admin/settings" element={<Settings />} />
+          </Route>
         </Route>
-      </Route>
 
-      {/* Teacher Protected Routes */}
-      <Route element={<ProtectedRoute allowedRoles={["teacher"]} />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
-          {/* Add more teacher routes here */}
+        {/* Teacher */}
+        <Route element={<ProtectedRoute allowedRoles={["teacher"]} />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+          </Route>
         </Route>
-      </Route>
 
-      {/* Student Protected Routes */}
-      <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
-        <Route element={<DashboardLayout />}>
-          <Route path="/student/dashboard" element={<StudentDashboard />} />
-          {/* Add more student routes here */}
+        {/* Student */}
+        <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
+          <Route element={<DashboardLayout />}>
+            <Route path="/student/dashboard" element={<StudentDashboard />} />
+          </Route>
         </Route>
-      </Route>
-    </Routes>
+      </Routes>
+    </>
   );
 }

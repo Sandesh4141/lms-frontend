@@ -10,9 +10,22 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Toast } from "sonner";
+
 import { Trash, Pencil } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Skeleton } from "@/components/ui/skeleton";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
+import { toast } from "sonner";
 
 interface Student {
   id: number;
@@ -23,13 +36,14 @@ interface Student {
 
 function Students() {
   const navigate = useNavigate();
+
   const [students, setStudents] = useState<Student[]>([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
+  const [deleteId, setDeleteId] = useState<number | null>(null);
 
   const token = localStorage.getItem("token");
 
-  // Fetch students
   const fetchStudents = async () => {
     try {
       setLoading(true);
@@ -46,19 +60,20 @@ function Students() {
     }
   };
 
-  const deleteStudent = async (id: number) => {
-    const confirmed = confirm("Are you sure you want to delete this student?");
-    if (!confirmed) return;
-
+  const confirmDelete = async () => {
+    if (!deleteId) return;
     try {
-      await axios.delete(`http://localhost:5000/admin/students/${id}`, {
+      await axios.delete(`http://localhost:5000/admin/students/${deleteId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      fetchStudents(); // refresh list
+      setDeleteId(null);
+      toast.success("Student deleted successfully ✅");
+      fetchStudents();
     } catch (err) {
       console.error("Failed to delete student", err);
+      toast.error("Failed to delete student ❌");
     }
   };
 
@@ -122,13 +137,31 @@ function Students() {
                   >
                     <Pencil size={16} />
                   </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => deleteStudent(student.id)}
-                  >
-                    <Trash size={16} />
-                  </Button>
+
+                  <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                      <Button
+                        size="sm"
+                        variant="destructive"
+                        onClick={() => setDeleteId(student.id)}
+                      >
+                        <Trash size={16} />
+                      </Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Are you sure you want to delete this student?
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={confirmDelete}>
+                          Yes, Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  </AlertDialog>
                 </TableCell>
               </TableRow>
             ))}
