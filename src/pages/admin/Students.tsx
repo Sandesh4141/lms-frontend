@@ -2,15 +2,23 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 import { Trash, Pencil } from "lucide-react";
-
 import { useNavigate } from "react-router-dom";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface Student {
   id: number;
   name: string;
   email: string;
-  studentId: string;
+  course_name: string;
 }
 
 function Students() {
@@ -21,7 +29,7 @@ function Students() {
 
   const token = localStorage.getItem("token");
 
-  // Fetch all students
+  // Fetch students
   const fetchStudents = async () => {
     try {
       setLoading(true);
@@ -38,7 +46,6 @@ function Students() {
     }
   };
 
-  // Delete a student
   const deleteStudent = async (id: number) => {
     const confirmed = confirm("Are you sure you want to delete this student?");
     if (!confirmed) return;
@@ -49,7 +56,7 @@ function Students() {
           Authorization: `Bearer ${token}`,
         },
       });
-      fetchStudents(); // Refresh the list
+      fetchStudents(); // refresh list
     } catch (err) {
       console.error("Failed to delete student", err);
     }
@@ -59,49 +66,53 @@ function Students() {
     fetchStudents();
   }, []);
 
-  // Filter based on search
-  const filteredStudents = students.filter(
-    (student) =>
-      student.name.toLowerCase().includes(search.toLowerCase()) ||
-      student.email.toLowerCase().includes(search.toLowerCase())
+  const filtered = students.filter((s) =>
+    `${s.name} ${s.email} ${s.course_name}`
+      .toLowerCase()
+      .includes(search.toLowerCase())
   );
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-xl font-semibold">Students</h2>
+        <h2 className="text-2xl font-bold">Students</h2>
         <Button onClick={() => navigate("/admin/student/add-student")}>
           Add Student
         </Button>
       </div>
 
       <Input
-        placeholder="Search students..."
+        placeholder="Search by name, email, or course..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        className="max-w-sm"
       />
 
       {loading ? (
-        <p>Loading...</p>
-      ) : filteredStudents.length === 0 ? (
-        <p>No students found.</p>
+        <div className="space-y-3">
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+          <Skeleton className="h-10 w-full" />
+        </div>
+      ) : filtered.length === 0 ? (
+        <p className="text-muted-foreground">No students found.</p>
       ) : (
-        <table className="w-full text-sm border rounded-md overflow-hidden">
-          <thead className="bg-muted text-left">
-            <tr>
-              <th className="p-2">Name</th>
-              <th className="p-2">Email</th>
-              <th className="p-2">Student ID</th>
-              <th className="p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredStudents.map((student) => (
-              <tr key={student.id} className="border-t">
-                <td className="p-2">{student.name}</td>
-                <td className="p-2">{student.email}</td>
-                <td className="p-2">{student.studentId}</td>
-                <td className="p-2 space-x-2">
+        <Table>
+          <TableHeader>
+            <TableRow>
+              <TableHead>Name</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Course</TableHead>
+              <TableHead className="text-right">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {filtered.map((student) => (
+              <TableRow key={student.id}>
+                <TableCell>{student.name}</TableCell>
+                <TableCell>{student.email}</TableCell>
+                <TableCell>{student.course_name}</TableCell>
+                <TableCell className="text-right space-x-2">
                   <Button
                     size="sm"
                     variant="outline"
@@ -109,21 +120,20 @@ function Students() {
                       navigate(`/admin/student/edit/${student.id}`)
                     }
                   >
-                    <Pencil size={14} />
+                    <Pencil size={16} />
                   </Button>
-
                   <Button
                     size="sm"
                     variant="destructive"
                     onClick={() => deleteStudent(student.id)}
                   >
-                    <Trash size={14} />
+                    <Trash size={16} />
                   </Button>
-                </td>
-              </tr>
+                </TableCell>
+              </TableRow>
             ))}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       )}
     </div>
   );
