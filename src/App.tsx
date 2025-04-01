@@ -10,13 +10,15 @@ import DashboardLayout from "@/components/layout/Dashboard";
 import ProtectedRoute from "@/components/ProtectedRoute";
 import Students from "@/pages/admin/Students";
 import Teachers from "@/pages/admin/Teachers";
-import Courses from "@/pages/admin/Courses";
+import Courses from "@/pages/admin/course/Courses";
+import EditCourse from "@/pages/admin/course/EditCourse";
 import Announcements from "@/pages/admin/Announcements";
 import Reports from "@/pages/admin/Reports";
 import Settings from "@/pages/admin/Setting";
 import AddStudentPage from "@/pages/admin/AddStudent";
 import EditStudentPage from "@/pages/admin/EditStudentPage";
-
+import AddTeacherPage from "@/pages/admin/AddTeacher";
+import Departments from "@/pages/admin/Departments";
 export default function App() {
   return (
     <>
@@ -44,9 +46,15 @@ export default function App() {
               element={<EditStudentPage />}
             />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            <Route
+              path="/admin/teachers/add-teacher"
+              element={<AddTeacherPage />}
+            />
             <Route path="/admin/students" element={<Students />} />
             <Route path="/admin/teachers" element={<Teachers />} />
+            <Route path="/admin/courses/edit/:id" element={<EditCourse />} />
             <Route path="/admin/courses" element={<Courses />} />
+            <Route path="/admin/departments" element={<Departments />} />
             <Route path="/admin/announcements" element={<Announcements />} />
             <Route path="/admin/reports" element={<Reports />} />
             <Route path="/admin/settings" element={<Settings />} />

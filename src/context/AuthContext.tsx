@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setUsername(username);
 
       // Redirect
-      navigate(`/${role}`);
+      navigate(`/${role}/dashboard`);
     } catch (err) {
       console.error("Login failed:", err);
       alert("Invalid credentials. Please try again.");
