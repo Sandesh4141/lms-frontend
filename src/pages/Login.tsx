@@ -22,6 +22,23 @@ export default function Login() {
     setLoading(false);
   };
 
+  // Dev Demo Fillers
+  const fillDemo = (type: "admin" | "teacher" | "student") => {
+    if (type === "admin") {
+      setUsername("admin");
+      setPassword("admin");
+      setRole("admin");
+    } else if (type === "teacher") {
+      setUsername("jane.dev");
+      setPassword("Jane@123");
+      setRole("teacher");
+    } else if (type === "student") {
+      setUsername("sandesh12");
+      setPassword("sandesh@123");
+      setRole("student");
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground px-4">
       {/* Top Navigation */}
@@ -29,6 +46,20 @@ export default function Login() {
         <Link to="/">
           <Button variant="ghost">← Back to Home</Button>
         </Link>
+      </div>
+
+      {/* DEV ONLY: Quick Login Buttons */}
+      {/* TODO: Remove this in production release */}
+      <div className="flex gap-4 mb-6">
+        <Button variant="outline" onClick={() => fillDemo("admin")}>
+          Admin Demo
+        </Button>
+        <Button variant="outline" onClick={() => fillDemo("teacher")}>
+          Teacher Demo
+        </Button>
+        <Button variant="outline" onClick={() => fillDemo("student")}>
+          Student Demo
+        </Button>
       </div>
 
       <form

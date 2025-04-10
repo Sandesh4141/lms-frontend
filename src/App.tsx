@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { Toaster } from "@/components/ui/sonner"; // Sonner toast system
+import { Toaster } from "@/components/ui/sonner";
 
 import Landing from "@/pages/Landing";
 import Login from "@/pages/Login";
@@ -18,7 +18,9 @@ import Settings from "@/pages/admin/Setting";
 import AddStudentPage from "@/pages/admin/AddStudent";
 import EditStudentPage from "@/pages/admin/EditStudentPage";
 import AddTeacherPage from "@/pages/admin/AddTeacher";
-import Departments from "@/pages/admin/Departments";
+import Departments from "@/pages/admin/departments/DepartmentsList";
+import Subjects from "./pages/teacher/subjects/Subjects";
+import Assignments from "./pages/teacher/assignments/Assignments";
 export default function App() {
   return (
     <>
@@ -55,6 +57,7 @@ export default function App() {
             <Route path="/admin/courses/edit/:id" element={<EditCourse />} />
             <Route path="/admin/courses" element={<Courses />} />
             <Route path="/admin/departments" element={<Departments />} />
+
             <Route path="/admin/announcements" element={<Announcements />} />
             <Route path="/admin/reports" element={<Reports />} />
             <Route path="/admin/settings" element={<Settings />} />
@@ -65,6 +68,8 @@ export default function App() {
         <Route element={<ProtectedRoute allowedRoles={["teacher"]} />}>
           <Route element={<DashboardLayout />}>
             <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
+            <Route path="/teacher/subjects" element={<Subjects />} />
+            <Route path="/teacher/assignments" element={<Assignments />} />
           </Route>
         </Route>
 
