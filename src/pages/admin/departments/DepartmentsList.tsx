@@ -3,6 +3,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useAuth } from "@/context/AuthContext";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -15,11 +16,12 @@ import {
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
 import { useNavigate } from "react-router-dom";
-import { Plus, Eye, Pencil, Trash2, School } from "lucide-react";
+import { Plus, Pencil, Trash2, School } from "lucide-react";
 
 export default function DepartmentList() {
   const [departments, setDepartments] = useState([]);
   const [deletingId, setDeletingId] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const { token } = useAuth();
 
@@ -56,28 +58,44 @@ export default function DepartmentList() {
     }
   };
 
+  const filteredDepartments = departments.filter((dept) =>
+    `${dept.program_name} ${dept.program_code}`
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div className="p-6 md:p-10 max-w-6xl mx-auto">
       {/* Header */}
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between mb-8 gap-4">
         <div className="flex items-center gap-3">
           <School className="w-8 h-8 text-primary" />
           <h1 className="text-3xl font-bold tracking-tight">
             Manage Departments
           </h1>
         </div>
-        <Button onClick={() => navigate("new")} className="flex gap-2">
-          <Plus className="w-4 h-4" />
-          Add Department
-        </Button>
+        <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+          <Input
+            placeholder="Search departments..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="sm:w-64"
+          />
+          <Button onClick={() => navigate("new")} className="flex gap-2">
+            <Plus className="w-4 h-4" />
+            Add Department
+          </Button>
+        </div>
       </div>
 
       {/* Department Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {departments.length === 0 ? (
-          <p className="text-muted-foreground">No departments found.</p>
+        {filteredDepartments.length === 0 ? (
+          <p className="text-muted-foreground">
+            No matching departments found.
+          </p>
         ) : (
-          departments.map((dept) => (
+          filteredDepartments.map((dept) => (
             <div
               key={dept.id}
               className="rounded-2xl border p-5 shadow-sm hover:shadow-md transition duration-200 bg-white dark:bg-muted/40 flex flex-col justify-between h-full"
@@ -99,15 +117,6 @@ export default function DepartmentList() {
 
               {/* Actions */}
               <div className="flex justify-end gap-2 mt-6">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="flex items-center gap-1"
-                  onClick={() => navigate(`${dept.id}`)}
-                >
-                  <Eye className="w-4 h-4" />
-                  View
-                </Button>
                 <Button
                   variant="secondary"
                   size="sm"
