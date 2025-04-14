@@ -27,6 +27,7 @@ import Subjects from "@/pages/teacher/subjects/Subjects";
 import Assignments from "@/pages/teacher/assignments/Assignments";
 import EditDepartment from "@/pages/admin/departments/EditDepartment";
 import StudentReport from "@/pages/admin/reports/StudentReport";
+import TeacherReport from "./pages/admin/reports/TeacherReport";
 export default function App() {
   return (
     <>
@@ -80,6 +81,7 @@ export default function App() {
             />
             <Route path="/admin/reports" element={<Reports />} />
             <Route path="/admin/reports/students" element={<StudentReport />} />
+            <Route path="/admin/reports/teachers" element={<TeacherReport />} />
             <Route path="/admin/settings" element={<Settings />} />
           </Route>
         </Route>
