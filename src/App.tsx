@@ -15,7 +15,7 @@ import EditCourse from "@/pages/admin/course/EditCourse";
 import Announcements from "@/pages/admin/announcements/Announcements";
 import CreateAnnouncementPage from "@/pages/admin/announcements/CreateAnnouncement";
 import EditAnnouncementPage from "@/pages/admin/announcements/EditAnnouncement";
-import Reports from "@/pages/admin/Reports";
+import Reports from "@/pages/admin/reports/Reports";
 import Settings from "@/pages/admin/Setting";
 import AddStudentPage from "@/pages/admin/AddStudent";
 import EditStudentPage from "@/pages/admin/EditStudentPage";
@@ -26,6 +26,7 @@ import AddDepartment from "@/pages/admin/departments/AddDepartment";
 import Subjects from "@/pages/teacher/subjects/Subjects";
 import Assignments from "@/pages/teacher/assignments/Assignments";
 import EditDepartment from "@/pages/admin/departments/EditDepartment";
+import StudentReport from "@/pages/admin/reports/StudentReport";
 export default function App() {
   return (
     <>
@@ -78,6 +79,7 @@ export default function App() {
               element={<EditAnnouncementPage />}
             />
             <Route path="/admin/reports" element={<Reports />} />
+            <Route path="/admin/reports/students" element={<StudentReport />} />
             <Route path="/admin/settings" element={<Settings />} />
           </Route>
         </Route>
