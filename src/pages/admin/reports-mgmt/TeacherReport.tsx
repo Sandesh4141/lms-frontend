@@ -5,6 +5,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Download, School } from "lucide-react";
 import * as XLSX from "xlsx";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  PieChart,
+  Pie,
+  Cell,
+  Legend,
+} from "recharts";
 
 export default function TeacherReport() {
   const [teachers, setTeachers] = useState([]);
@@ -51,6 +63,23 @@ export default function TeacherReport() {
     return acc;
   }, {});
 
+  const departmentChartData = Object.entries(groupedByDepartment).map(
+    ([name, list]) => ({ name, value: list.length })
+  );
+
+  const courseChartData = Object.entries(groupedByCourse).map(
+    ([name, list]) => ({ name, count: list.length })
+  );
+
+  const COLORS = [
+    "#8884d8",
+    "#82ca9d",
+    "#ffc658",
+    "#ff7f50",
+    "#8dd1e1",
+    "#d0ed57",
+  ];
+
   const exportGroup = (group, name) => {
     const ws = XLSX.utils.json_to_sheet(group);
     const wb = XLSX.utils.book_new();
@@ -75,6 +104,48 @@ export default function TeacherReport() {
             <Download className="w-4 h-4 mr-2" /> Export All
           </Button>
         </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <Card className="p-4">
+          <h2 className="text-lg font-semibold mb-4">
+            🏫 Department Distribution
+          </h2>
+          <ResponsiveContainer width="100%" height={250}>
+            <PieChart>
+              <Pie
+                data={departmentChartData}
+                dataKey="value"
+                nameKey="name"
+                outerRadius={80}
+                label
+              >
+                {departmentChartData.map((entry, index) => (
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
+                ))}
+              </Pie>
+              <Tooltip />
+              <Legend layout="horizontal" verticalAlign="bottom" />
+            </PieChart>
+          </ResponsiveContainer>
+        </Card>
+
+        <Card className="p-4">
+          <h2 className="text-lg font-semibold mb-4">
+            📚 Course-wise Teachers
+          </h2>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={courseChartData}>
+              <XAxis dataKey="name" tick={{ fontSize: 12 }} />
+              <YAxis allowDecimals={false} />
+              <Tooltip />
+              <Bar dataKey="count" fill="#4f46e5" />
+            </BarChart>
+          </ResponsiveContainer>
+        </Card>
       </div>
 
       <div className="space-y-3">

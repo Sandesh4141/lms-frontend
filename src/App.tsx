@@ -8,26 +8,29 @@ import TeacherDashboard from "@/pages/teacher/TeacherDashboard";
 import StudentDashboard from "@/pages/student/StudentDashboard";
 import DashboardLayout from "@/components/layout/Dashboard";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import Students from "@/pages/admin/Students";
-import Teachers from "@/pages/admin/Teachers";
-import Courses from "@/pages/admin/course/Courses";
-import EditCourse from "@/pages/admin/course/EditCourse";
-import Announcements from "@/pages/admin/announcements/Announcements";
-import CreateAnnouncementPage from "@/pages/admin/announcements/CreateAnnouncement";
-import EditAnnouncementPage from "@/pages/admin/announcements/EditAnnouncement";
-import Reports from "@/pages/admin/reports/Reports";
+import Students from "@/pages/admin/students-mgmt/Students";
+import Teachers from "@/pages/admin/teachers-mgmt/Teachers";
+import Courses from "@/pages/admin/course-mgmt/Courses";
+import EditCourse from "@/pages/admin/course-mgmt/EditCourse";
+import Announcements from "@/pages/admin/announcements-mgmt/Announcements";
+import CreateAnnouncementPage from "@/pages/admin/announcements-mgmt/CreateAnnouncement";
+import EditAnnouncementPage from "@/pages/admin/announcements-mgmt/EditAnnouncement";
+import Reports from "@/pages/admin/reports-mgmt/Reports";
 import Settings from "@/pages/admin/Setting";
-import AddStudentPage from "@/pages/admin/AddStudent";
-import EditStudentPage from "@/pages/admin/EditStudentPage";
-import AddTeacherPage from "@/pages/admin/AddTeacher";
-import Departments from "@/pages/admin/departments/DepartmentsList";
-import AddDepartment from "@/pages/admin/departments/AddDepartment";
+import AddStudentPage from "@/pages/admin/students-mgmt/AddStudent";
+import EditStudentPage from "@/pages/admin/students-mgmt/EditStudentPage";
+import ViewStudent from "@/pages/admin/students-mgmt/ViewStudent";
+import AddTeacherPage from "@/pages/admin/teachers-mgmt/AddTeacher";
+import Departments from "@/pages/admin/departments-mgmt/DepartmentsList";
+import AddDepartment from "@/pages/admin/departments-mgmt/AddDepartment";
 
 import Subjects from "@/pages/teacher/subjects/Subjects";
 import Assignments from "@/pages/teacher/assignments/Assignments";
-import EditDepartment from "@/pages/admin/departments/EditDepartment";
-import StudentReport from "@/pages/admin/reports/StudentReport";
-import TeacherReport from "./pages/admin/reports/TeacherReport";
+import EditDepartment from "@/pages/admin/departments-mgmt/EditDepartment";
+import StudentReport from "@/pages/admin/reports-mgmt/StudentReport";
+import TeacherReport from "./pages/admin/reports-mgmt/TeacherReport";
+import EditTeacher from "./pages/admin/teachers-mgmt/EditTeacher";
+import ViewTeacher from "./pages/admin/teachers-mgmt/ViewTeacher";
 export default function App() {
   return (
     <>
@@ -54,6 +57,7 @@ export default function App() {
               path="/admin/student/edit/:id"
               element={<EditStudentPage />}
             />
+            <Route path="/admin/student/view/:id" element={<ViewStudent />} />
             <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route
               path="/admin/teachers/add-teacher"
@@ -61,6 +65,8 @@ export default function App() {
             />
             <Route path="/admin/students" element={<Students />} />
             <Route path="/admin/teachers" element={<Teachers />} />
+            <Route path="/admin/teachers/edit/:id" element={<EditTeacher />} />
+            <Route path="/admin/teachers/view/:id" element={<ViewTeacher />} />
             <Route path="/admin/courses/edit/:id" element={<EditCourse />} />
             <Route path="/admin/courses" element={<Courses />} />
 

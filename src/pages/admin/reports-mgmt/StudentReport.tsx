@@ -3,8 +3,7 @@ import axios from "axios";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Download, Users } from "lucide-react";
-import * as XLSX from "xlsx";
+import { Users } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -17,6 +16,8 @@ import {
   Cell,
   Legend,
 } from "recharts";
+
+import * as XLSX from "xlsx";
 
 export default function StudentReport() {
   const [students, setStudents] = useState([]);
