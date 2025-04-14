@@ -8,29 +8,29 @@ import TeacherDashboard from "@/pages/teacher/TeacherDashboard";
 import StudentDashboard from "@/pages/student/StudentDashboard";
 import DashboardLayout from "@/components/layout/Dashboard";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import Students from "@/pages/admin/students-mgmt/Students";
-import Teachers from "@/pages/admin/teachers-mgmt/Teachers";
-import Courses from "@/pages/admin/course-mgmt/Courses";
-import EditCourse from "@/pages/admin/course-mgmt/EditCourse";
-import Announcements from "@/pages/admin/announcements-mgmt/Announcements";
-import CreateAnnouncementPage from "@/pages/admin/announcements-mgmt/CreateAnnouncement";
-import EditAnnouncementPage from "@/pages/admin/announcements-mgmt/EditAnnouncement";
-import Reports from "@/pages/admin/reports-mgmt/Reports";
+import Students from "@/pages/admin/students/Students";
+import Teachers from "@/pages/admin/teachers/Teachers";
+import Courses from "@/pages/admin/courses/Courses";
+import EditCourse from "@/pages/admin/courses/EditCourse";
+import Announcements from "@/pages/admin/announcements/Announcements";
+import CreateAnnouncementPage from "@/pages/admin/announcements/CreateAnnouncement";
+import EditAnnouncementPage from "@/pages/admin/announcements/EditAnnouncement";
+import Reports from "@/pages/admin/reports/Reports";
 import Settings from "@/pages/admin/Setting";
-import AddStudentPage from "@/pages/admin/students-mgmt/AddStudent";
-import EditStudentPage from "@/pages/admin/students-mgmt/EditStudentPage";
-import ViewStudent from "@/pages/admin/students-mgmt/ViewStudent";
-import AddTeacherPage from "@/pages/admin/teachers-mgmt/AddTeacher";
-import Departments from "@/pages/admin/departments-mgmt/DepartmentsList";
-import AddDepartment from "@/pages/admin/departments-mgmt/AddDepartment";
+import AddStudentPage from "@/pages/admin/students/AddStudent";
+import EditStudentPage from "@/pages/admin/students/EditStudentPage";
+import ViewStudent from "@/pages/admin/students/ViewStudent";
+import AddTeacherPage from "@/pages/admin/teachers/AddTeacher";
+import Departments from "@/pages/admin/departments/DepartmentsList";
+import AddDepartment from "@/pages/admin/departments/AddDepartment";
 
 import Subjects from "@/pages/teacher/subjects/Subjects";
 import Assignments from "@/pages/teacher/assignments/Assignments";
-import EditDepartment from "@/pages/admin/departments-mgmt/EditDepartment";
-import StudentReport from "@/pages/admin/reports-mgmt/StudentReport";
-import TeacherReport from "./pages/admin/reports-mgmt/TeacherReport";
-import EditTeacher from "./pages/admin/teachers-mgmt/EditTeacher";
-import ViewTeacher from "./pages/admin/teachers-mgmt/ViewTeacher";
+import EditDepartment from "@/pages/admin/departments/EditDepartment";
+import StudentReport from "@/pages/admin/reports/StudentReport";
+import TeacherReport from "./pages/admin/reports/TeacherReport";
+import EditTeacher from "./pages/admin/teachers/EditTeacher";
+import ViewTeacher from "./pages/admin/teachers/ViewTeacher";
 export default function App() {
   return (
     <>

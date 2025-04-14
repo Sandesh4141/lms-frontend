@@ -15,27 +15,33 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
+import {
+  Dialog,
+  DialogTrigger,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
 import { Plus, Pencil, Trash2, School } from "lucide-react";
 
 export default function DepartmentList() {
   const [departments, setDepartments] = useState([]);
   const [deletingId, setDeletingId] = useState(null);
+  const [selectedDept, setSelectedDept] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
   const { token } = useAuth();
 
   useEffect(() => {
     fetchDepartments();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchDepartments = async () => {
     try {
       const res = await axios.get("http://localhost:5000/admin/departments", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       setDepartments(res.data);
     } catch (err) {
@@ -46,12 +52,10 @@ export default function DepartmentList() {
   const deleteDepartment = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/admin/departments/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
       toast.success("Department deleted");
-      setDepartments(departments.filter((d) => d.id !== id));
+      setDepartments((prev) => prev.filter((d) => d.id !== id));
       setDeletingId(null);
     } catch (err) {
       toast.error("Delete failed");
@@ -117,6 +121,39 @@ export default function DepartmentList() {
 
               {/* Actions */}
               <div className="flex justify-end gap-2 mt-6">
+                {/* View Dialog */}
+                <Dialog>
+                  <DialogTrigger asChild>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="flex items-center gap-1"
+                      onClick={() => setSelectedDept(dept)}
+                    >
+                      👁️ View
+                    </Button>
+                  </DialogTrigger>
+                  <DialogContent>
+                    <DialogHeader>
+                      <DialogTitle>{selectedDept?.program_name}</DialogTitle>
+                      <DialogDescription>
+                        Details about the selected department.
+                      </DialogDescription>
+                    </DialogHeader>
+                    <div className="text-sm space-y-2 mt-2">
+                      <p>
+                        <span className="font-medium">Program Code:</span>{" "}
+                        {selectedDept?.program_code}
+                      </p>
+                      <p>
+                        <span className="font-medium">Description:</span>{" "}
+                        {selectedDept?.description || "—"}
+                      </p>
+                    </div>
+                  </DialogContent>
+                </Dialog>
+
+                {/* Edit */}
                 <Button
                   variant="secondary"
                   size="sm"
@@ -127,6 +164,7 @@ export default function DepartmentList() {
                   Edit
                 </Button>
 
+                {/* Delete */}
                 <AlertDialog
                   open={deletingId === dept.id}
                   onOpenChange={(open) => !open && setDeletingId(null)}
