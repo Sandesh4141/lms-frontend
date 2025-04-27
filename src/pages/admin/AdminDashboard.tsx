@@ -4,7 +4,7 @@ import { useAuth } from "@/context/AuthContext";
 
 import StatsCard from "@/components/ui/dashboard/StatsCard";
 import ActivityCard from "@/components/ui/dashboard/ActivityCard";
-
+import { useNavigate } from "react-router-dom";
 import {
   Users,
   BookOpen,
@@ -21,6 +21,7 @@ const AdminDashboard = () => {
   const { username } = useAuth();
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -81,15 +82,31 @@ const AdminDashboard = () => {
         <div className="glass-card rounded-xl p-6 hover-lift card-transition">
           <h3 className="text-lg font-medium mb-4">Quick Actions</h3>
           <div className="grid grid-cols-1 gap-3">
-            <button className="flex items-center gap-2 w-full p-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors">
+            <button
+              onClick={() => navigate("/admin/student/add-student")}
+              className="flex items-center gap-2 w-full p-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            >
               <UserPlus className="h-5 w-5" />
-              <span>Add New User</span>
+              <span>Add New Student</span>
             </button>
-            <button className="flex items-center gap-2 w-full p-3 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors">
+            <button
+              onClick={() => navigate("/admin/teachers/add-teacher")}
+              className="flex items-center gap-2 w-full p-3 rounded-lg bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+            >
+              <UserPlus className="h-5 w-5" />
+              <span>Add New Teacher</span>
+            </button>
+            <button
+              onClick={() => navigate("/admin/courses/add-course")}
+              className="flex items-center gap-2 w-full p-3 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors"
+            >
               <BookPlus className="h-5 w-5" />
               <span>Create New Course</span>
             </button>
-            <button className="flex items-center gap-2 w-full p-3 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors">
+            <button
+              onClick={() => navigate("/admin/announcements/add-announcement")}
+              className="flex items-center gap-2 w-full p-3 rounded-lg bg-secondary text-secondary-foreground hover:bg-secondary/90 transition-colors"
+            >
               <Bell className="h-5 w-5" />
               <span>Send Announcement</span>
             </button>

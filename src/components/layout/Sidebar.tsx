@@ -81,7 +81,7 @@ export default function Sidebar() {
 
       {/* App title */}
       <div className="pt-6 pb-4 border-border text-center font-bold text-lg tracking-wide uppercase">
-        {collapsed ? "LMS" : "Moodle LMS"}
+        {collapsed ? "LMS" : "Learnify LMS"}
       </div>
 
       {/* Nav Links */}

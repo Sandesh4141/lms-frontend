@@ -7,7 +7,7 @@ export default function Landing() {
     <div className="min-h-screen bg-background text-foreground flex flex-col">
       {/* Navbar */}
       <header className="w-full px-6 py-4 border-b border-border flex justify-between items-center sticky top-0 bg-background/90 backdrop-blur z-10">
-        <h1 className="text-xl md:text-2xl font-semibold">MOODLE LMS</h1>
+        <h1 className="text-xl md:text-2xl font-semibold">Learnify LMS</h1>
         <div className="flex items-center gap-4">
           <Link to="/login">
             <Button variant="default">Login</Button>
@@ -32,7 +32,7 @@ export default function Landing() {
 
       {/* Footer */}
       <footer className="text-sm text-muted-foreground text-center py-6">
-        © {new Date().getFullYear()} Moodle lms. All rights reserved.
+        © {new Date().getFullYear()} Learnify lms. All rights reserved.
       </footer>
     </div>
   );

@@ -28,7 +28,7 @@ import Subjects from "@/pages/teacher/subjects/Subjects";
 import Assignments from "@/pages/teacher/assignments/Assignments";
 import EditDepartment from "@/pages/admin/departments/EditDepartment";
 import StudentReport from "@/pages/admin/reports/StudentReport";
-import TeacherReport from "./pages/admin/reports/TeacherReport";
+import TeacherReport from "@/pages/admin/reports/TeacherReport";
 import EditTeacher from "./pages/admin/teachers/EditTeacher";
 import ViewTeacher from "./pages/admin/teachers/ViewTeacher";
 export default function App() {
