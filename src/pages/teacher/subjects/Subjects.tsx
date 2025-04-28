@@ -204,7 +204,13 @@ export default function Subjects() {
                   <Button
                     size="sm"
                     variant="default"
-                    onClick={() => navigate(`/teacher/subject/${subject.id}`)}
+                    
+                    onClick={() => {
+                      console.log("Navigating to subject:", subject);
+                      
+                      navigate(`/teacher/subjects/${subject.id}`)
+                    }
+                  }
                     className="flex items-center gap-2 w-full sm:w-auto"
                   >
                     📖 Details

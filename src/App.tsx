@@ -25,11 +25,13 @@ import Departments from "@/pages/admin/departments/DepartmentsList";
 import AddDepartment from "@/pages/admin/departments/AddDepartment";
 
 import Subjects from "@/pages/teacher/subjects/Subjects";
+import SubjectDetails from "@/pages/teacher/subjects/SubjectDetails";
+
 import Assignments from "@/pages/teacher/assignments/Assignments";
 import EditDepartment from "@/pages/admin/departments/EditDepartment";
 import StudentReport from "@/pages/admin/reports/StudentReport";
 import TeacherReport from "@/pages/admin/reports/TeacherReport";
-import EditTeacher from "./pages/admin/teachers/EditTeacher";
+import EditTeacher from "@/pages/admin/teachers/EditTeacher";
 import ViewTeacher from "./pages/admin/teachers/ViewTeacher";
 export default function App() {
   return (
@@ -97,6 +99,7 @@ export default function App() {
           <Route element={<DashboardLayout />}>
             <Route path="/teacher/dashboard" element={<TeacherDashboard />} />
             <Route path="/teacher/subjects" element={<Subjects />} />
+            <Route path="/teacher/subjects/:id" element={<SubjectDetails />} />
             <Route path="/teacher/assignments" element={<Assignments />} />
           </Route>
         </Route>
